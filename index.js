@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const postRoutes = require("./routes/post");
 const productRoutes = require("./routes/product");
@@ -29,9 +30,14 @@ app.use("/blog", postRoutes);
 // POST: http://localhost:3003/product
 app.use("/", productRoutes);
 
-// donnez l'acces a l'application aux routes qui permettent de gerer les produits
-// creez un fichier route et un controller qui correspond
-
-app.listen(3003, () => {
-  console.log("App is listening on port 3003");
-});
+// Connexion a la base de donnees
+mongoose
+  .connect("copiez votre chaine de connexion ici")
+  .then((result) => {
+    // je lance l'application Express uniquement si je suis connecte
+    // a mongodb
+    app.listen(3003, () => {
+      console.log("App is listening on port 3003");
+    });
+  })
+  .catch((e) => console.log("erreur a la connexion " + e));

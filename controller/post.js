@@ -1,3 +1,5 @@
+const Post = require("../models/post");
+
 exports.getPosts = (req, res) => {
   res.status(200).json({
     posts: [
@@ -13,14 +15,23 @@ exports.createPost = (req, res) => {
   const title = req.body.title;
   const content = req.body.content;
 
-  // Creates a post in a mongo database
-
-  res.status(201).json({
-    message: "Post created successfully",
-    post: {
-      _id: new Date().toISOString(),
-      title: title,
-      content: content,
-    },
+  // TODO: ajouter des controles...
+  const post = new Post({
+    title: title,
+    content: content,
   });
+
+  post
+    .save()
+
+    .then((result) => {
+      res.status(201).json({
+        message: "Post created successfully",
+        post: result,
+      });
+    })
+    .catch((error) => {
+      console.log("error: ", error);
+      // envoyer une reponse appropriee
+    });
 };
