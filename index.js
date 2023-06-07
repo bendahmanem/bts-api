@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const postRoutes = require("./routes/post");
+const productRoutes = require("./routes/product");
 
 const app = express();
 
@@ -20,7 +21,13 @@ app.use((req, res, next) => {
   next();
 });
 
+// GET: http://localhost:3003/blog/posts
+// POST: http://localhost:3003/blog/post
 app.use("/blog", postRoutes);
+
+// GET: http://localhost:3003/products
+// POST: http://localhost:3003/product
+app.use("/", productRoutes);
 
 // donnez l'acces a l'application aux routes qui permettent de gerer les produits
 // creez un fichier route et un controller qui correspond
