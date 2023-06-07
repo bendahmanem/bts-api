@@ -8,3 +8,19 @@ exports.getPosts = (req, res) => {
     ],
   });
 };
+
+exports.createPost = (req, res) => {
+  const title = req.body.title;
+  const content = req.body.content;
+
+  // Creates a post in a mongo database
+
+  res.status(201).json({
+    message: "Post created successfully",
+    post: {
+      _id: new Date().toISOString(),
+      title: title,
+      content: content,
+    },
+  });
+};
