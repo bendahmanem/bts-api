@@ -11,6 +11,26 @@ exports.getPosts = (req, res) => {
   });
 };
 
+exports.getById = (httpRequest, httpResponse, next) => {
+  const postId = httpRequest.params.id;
+  Post.findById(id)
+    .then((post) => {
+      // verifier si le post est correcte
+
+      // si tout est ok
+      httpResponse.status(200).json({
+        message: "Post found!",
+        post: post,
+      });
+    })
+    .catch((error) => {
+      if (!error.statusCode) {
+        err.statusCode = 500;
+      }
+      next(err);
+    });
+};
+
 exports.createPost = (req, res) => {
   const title = req.body.title;
   const content = req.body.content;
